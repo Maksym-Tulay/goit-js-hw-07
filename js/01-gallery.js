@@ -1,8 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-// console.log(galleryItems);
-
 const imageGallery = document.querySelector('.gallery');
 function createImageGallery() {
   const galleryMarkup = galleryItems.reduce((acc, { original, preview, description }) => acc + 
@@ -22,43 +20,36 @@ function createImageGallery() {
 
 createImageGallery();
 
-// console.log(basicLightbox);
+imageGallery.addEventListener('click', onGalleryImageClick);
 
+function onGalleryImageClick(evt) {
+  evt.preventDefault();
 
+  if (evt.target.nodeName !== 'IMG'){
+    return
+  }
 
-// imageGallery.addEventListener('click', onGalleryImageClick);
+  const imageModal = basicLightbox.create(`
+    <img
+      src="${evt.target.dataset.source}"
+      width = "600"
+      height = "400"
+      >`,
+    {
+      onShow: imageModal => {document.addEventListener('keydown', onEscapeButtonClick)},
+      onClose: imageModal => {document.addEventListener('keydown', onEscapeButtonClick)}
+    }
+  );
 
-const openImageModal = basicLightbox.create(`
-  <img
-    class="gallery__image"
-    src="${original}"
-    alt="${description}"
-  />
-`);
+  imageModal.show();
 
-openImageModal();
+  function onEscapeButtonClick(evt) {
+    if (evt.code !== 'Escape') {
+      return
+    }
+    imageModal.close();
+  };
 
-// const onGalleryImgClick = event => {  
-//   event.preventDefault();  
-//   if (event.target.nodeName !== 'IMG') {
-//     return
-//   };
+};
 
-//   const imageModal = basicLightbox.create(`
-//     <img src="${event.target.dataset.source}" width="800" height="600">  `,
-//     {
-//       onShow: imageModal => {document.addEventListener('keydown', onEscapeKeyDown)},
-//       onClose: imageModal => {document.removeEventListener('keydown', onEscapeKeyDown)},    
-//     }
-//   );  
-
-//   imageModal.show();
-
-//   function onEscapeKeyDown(event) { 
-//     if (event.code !== 'Escape') {
-//       return
-//     }
-//     imageModal.close()
-//   };
-// }
 
