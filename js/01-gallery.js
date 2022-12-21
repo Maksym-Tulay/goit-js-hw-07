@@ -13,7 +13,8 @@ function createImageGallery() {
     alt="${description}"
     />
     </a>
-    </div>`, '');
+    </div>`,
+    '');
 
   imageGallery.insertAdjacentHTML('afterbegin', galleryMarkup);
 };
@@ -25,9 +26,9 @@ imageGallery.addEventListener('click', onGalleryImageClick);
 function onGalleryImageClick(evt) {
   evt.preventDefault();
 
-  if (evt.target.nodeName !== 'IMG'){
+  if (evt.target.nodeName !== 'IMG') {
     return
-  }
+  };
 
   const imageModal = basicLightbox.create(`
     <img
@@ -37,7 +38,7 @@ function onGalleryImageClick(evt) {
       >`,
     {
       onShow: imageModal => {document.addEventListener('keydown', onEscapeButtonClick)},
-      onClose: imageModal => {document.addEventListener('keydown', onEscapeButtonClick)}
+      onClose: imageModal => {document.removeEventListener('keydown', onEscapeButtonClick)}
     }
   );
 
