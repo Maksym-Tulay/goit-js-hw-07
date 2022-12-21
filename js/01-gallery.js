@@ -17,12 +17,26 @@ function createImageGallery() {
     </a>
     </div>`, '');
 
-  imageGallery.insertAdjacentHTML('beforeend', galleryMarkup);
+  imageGallery.insertAdjacentHTML('afterbegin', galleryMarkup);
 };
 
 createImageGallery();
 
-imageGallery.addEventListener('click', onGalleryImgClick());
+// console.log(basicLightbox);
+
+
+
+// imageGallery.addEventListener('click', onGalleryImageClick);
+
+const openImageModal = basicLightbox.create(`
+  <img
+    class="gallery__image"
+    src="${original}"
+    alt="${description}"
+  />
+`);
+
+openImageModal();
 
 // const onGalleryImgClick = event => {  
 //   event.preventDefault();  
@@ -48,27 +62,3 @@ imageGallery.addEventListener('click', onGalleryImgClick());
 //   };
 // }
 
-const onGalleryImgClick = event => {  
-  event.preventDefault();  
-  
-  if (event.target.nodeName !== 'IMG') {
-    return
-  };
-
-  const imageModal = basicLightbox.create(`
-    <img src="${event.target.dataset.source}" width="800" height="600">  `,
-    // {
-    //   onShow: imageModal => {document.addEventListener('keydown', onEscapeKeyDown)},
-    //   onClose: imageModal => {document.removeEventListener('keydown', onEscapeKeyDown)},    
-    // }
-  );  
-
-  imageModal.show();
-
-  // function onEscapeKeyDown(event) { 
-  //   if (event.code !== 'Escape') {
-  //     return
-  //   }
-  //   imageModal.close()
-  // };
-};
