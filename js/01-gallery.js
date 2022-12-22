@@ -2,6 +2,7 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 const imageGallery = document.querySelector('.gallery');
+
 function createImageGallery() {
   const galleryMarkup = galleryItems.reduce((acc, { original, preview, description }) => acc + 
     `<div class="gallery__item">

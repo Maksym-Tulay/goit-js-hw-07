@@ -4,6 +4,7 @@ import { galleryItems } from './gallery-items.js';
 // console.log(galleryItems);
 
 const imageGallery = document.querySelector('.gallery');
+
 function createImageGallery() {
   const galleryMarkup = galleryItems.reduce((acc, { original, preview, description }) => acc + 
     `<a class="gallery__item" href="${original}">
@@ -25,6 +26,14 @@ function onGalleryImageClick(evt) {
     return
   };
 
+  const imageModal = new SimpleLightbox('.gallery__item',
+  {
+    nav: true,
+    enableKeyboard: true,
+    overlayOpacity: 0.7,
+    
+  }
+  )
 //   const imageModal = basicLightbox.create(`
 //     <img
 //       src="${evt.target.dataset.source}"
