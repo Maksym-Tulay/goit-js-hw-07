@@ -1,7 +1,11 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-const imageGallery = document.querySelector('.gallery');
+// refs
+
+const galleryRefs = document.querySelector('.gallery');
+
+// functions for creating gallery and opening lightbox
 
 function createImageGallery() {
   const galleryMarkup = galleryItems.reduce((acc, { original, preview, description }) => acc + 
@@ -17,12 +21,8 @@ function createImageGallery() {
     </div>`,
     '');
 
-  imageGallery.insertAdjacentHTML('afterbegin', galleryMarkup);
+  galleryRefs.insertAdjacentHTML('afterbegin', galleryMarkup);
 };
-
-createImageGallery();
-
-imageGallery.addEventListener('click', onGalleryImageClick);
 
 function onGalleryImageClick(evt) {
   evt.preventDefault();
@@ -31,27 +31,32 @@ function onGalleryImageClick(evt) {
     return
   };
 
-  const imageModal = basicLightbox.create(`
+  const lightbox = basicLightbox.create(`
     <img
       src="${evt.target.dataset.source}"
       width = "600"
       height = "400"
       >`,
     {
-      onShow: imageModal => {document.addEventListener('keydown', onEscapeButtonClick)},
-      onClose: imageModal => {document.removeEventListener('keydown', onEscapeButtonClick)}
+      onShow: lightbox => {document.addEventListener('keydown', onEscapeButtonClick)},
+      onClose: lightbox => {document.removeEventListener('keydown', onEscapeButtonClick)}
     }
   );
 
-  imageModal.show();
+  lightbox.show();
 
   function onEscapeButtonClick(evt) {
     if (evt.code !== 'Escape') {
       return
     }
-    imageModal.close();
+    lightbox.close();
   };
-
 };
 
+// create gallery
 
+createImageGallery();
+
+// open lightbox
+
+galleryRefs.addEventListener('click', onGalleryImageClick);
