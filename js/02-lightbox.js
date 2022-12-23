@@ -1,9 +1,11 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-// console.log(galleryItems);
+// refs
 
-const imageGallery = document.querySelector('.gallery');
+const galleryRefs = document.querySelector('.gallery');
+
+// function for creating gallery
 
 function createImageGallery() {
   const galleryMarkup = galleryItems.reduce((acc, { original, preview, description }) => acc + 
@@ -12,49 +14,18 @@ function createImageGallery() {
     </a>`,
     '');
 
-  imageGallery.insertAdjacentHTML('afterbegin', galleryMarkup);
+  galleryRefs.insertAdjacentHTML('afterbegin', galleryMarkup);
 };
+
+// create gallery
 
 createImageGallery();
 
-imageGallery.addEventListener('click', onGalleryImageClick);
+// open lightbox
 
-function onGalleryImageClick(evt) {
-  evt.preventDefault();
-
-  if (evt.target.nodeName !== 'IMG') {
-    return
-  };
-
-  const imageModal = new SimpleLightbox('.gallery__item',
+const lightbox = new SimpleLightbox('.gallery a',
   {
-    nav: true,
-    enableKeyboard: true,
-    overlayOpacity: 0.7,
-    
+    captionsData: "alt",
+    captionDelay: 250,
   }
-  )
-//   const imageModal = basicLightbox.create(`
-//     <img
-//       src="${evt.target.dataset.source}"
-//       width = "600"
-//       height = "400"
-//       >`,
-//     {
-//       onShow: imageModal => {document.addEventListener('keydown', onEscapeButtonClick)},
-//       onClose: imageModal => {document.removeEventListener('keydown', onEscapeButtonClick)}
-//     }
-//   );
-
-//   imageModal.show();
-
-//   function onEscapeButtonClick(evt) {
-//     if (evt.code !== 'Escape') {
-//       return
-//     }
-//     imageModal.close();
-//   };
-
-};
-
-
+);
